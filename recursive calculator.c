@@ -10,7 +10,7 @@ int t, p = 3;
 double Sum(double, double);
 double Sub(double, double);
 double Mul(double, double);
-double Div(double, double);
+int Div(int, int, int);
 
 void setPrecision() {
     printf("Choose the precision for ur answers : \n");
@@ -43,7 +43,7 @@ void getInput() {
             printf("error: \"b\" should be non-zero!\n\n");
             return;
         }
-        printf("Answer : %.*lf\n\n", p, Div(a, b));
+        printf("Answer : %.*lf\n\n", p, (double)Div(0, a, b));
     }
     else if (t == 5) {
         setPrecision();
@@ -64,17 +64,36 @@ int main()
 }
 
 double Sum(double a, double b) {
-    return (a + b);
+    if (b < 0)
+        return a + b;
+    return Sum(a, b - 1) + 1;
 }
 
 double Sub(double a, double b) {
-    return (a - b);
+    if (b < 0)
+        return a - b;
+    return Sub(a, b - 1) - 1;
 }
 
 double Mul(double a, double b) {
-    return (a * b);
+    if (b < 0)
+        return a * b;
+    return Sum(Mul(a, b - 1), a);
 }
 
-double Div(double a, double b) {
-    return (a / b);
+int Div(int l, int r, int b) {
+    int m = (int)Sum(l, r) >> 1;
+    if (m == 0)
+        return 0;
+    if ((int)Mul(m, b) == (int)a) {
+        return m;
+    }
+
+    if ((int)Mul(m, b) > (int)a) {
+        r = m;
+    }
+    else {
+        l = m;
+    }
+    return Div(l, r, b);
 }
