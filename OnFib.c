@@ -12,7 +12,7 @@ int fib(int n)
     if (f[n])
         return f[n];
         
-    return f[n] = fib(n - 1) + fib(n - 2);;  
+    return f[n] = fib(n - 1) + fib(n - 2);  
 }
 
 int main()
